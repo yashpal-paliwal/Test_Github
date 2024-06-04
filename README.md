@@ -1,2 +1,3 @@
-# Test_Github
-to test how git hub works
+# OMP Toolbox using TRIRIGA APIs
+
+use tririga APIs to create blank OMP
