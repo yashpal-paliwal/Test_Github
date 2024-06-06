@@ -14,3 +14,8 @@ steps:
   inputs:
     scriptSource: 'filePath'
     scriptPath: $(System.DefaultWorkingDirectory)/createOMP_Base.py
+
+- task: AzureStaticWebApp@0
+  inputs:
+        app_location: '/app.py'
+        production_branch: 'main'
