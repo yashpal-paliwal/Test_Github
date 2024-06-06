@@ -17,6 +17,6 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: '$(System.DefaultWorkingDirectory)/app.py'
+    app_location: '.'
     azure_static_web_apps_api_token: '848b1bb07724d7f17a8087501b2621f24b3f1928a1265cf2a5114e44760acbc05-ddc192aa-d7fa-4ae8-8265-4390e6fed90500f250526'
     production_branch: 'main'
