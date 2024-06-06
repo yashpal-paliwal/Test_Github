@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create OMP Package</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#createPackage").click(function(){
+                $.ajax({
+                    url: '/create_empty_package',
+                    type: 'get',
+                    success: function(response){
+                        alert(JSON.stringify(response));
+                    },
+                    error: function(error){
+                        alert('Error: ' + JSON.stringify(error));
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="createPackage">Create OMP Package</button>
+</body>
+</html>
