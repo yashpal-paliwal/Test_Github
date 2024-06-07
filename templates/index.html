@@ -2,6 +2,23 @@
 <html>
 <head>
     <title>Create OMP Package</title>
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 4px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -23,5 +40,35 @@
 <body>
     <p>OMP Toolbox!!</p>
     <button id="createPackage">Create OMP Package</button>
+    <br><br>
+
+     <h4>Environment Details</h4>
+    <table>
+        <tr>
+            <th>Environment URL</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        <tr>
+            <td><input type="text" id="envUrl" name="envUrl"></td>
+            <td><input type="text" id="username" name="username"></td>
+            <td> <input type="password" id="password" name="password"></td>
+        </tr>
+    </table>
+   
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload Connection File" name="submit">
+    </form>
+    
+    <br><br><h2>OMP Details</h2>
+    <form>
+        <label for="ompName">OMP Name:</label><br>
+        <input type="text" id="ompName" name="ompName"><br>
+        <label for="ompDesc">OMP Description:</label><br>
+        <textarea id="ompDesc" name="ompDesc"></textarea><br>
+        <input type="submit" value="CreateOMP">
+    </form>
+    
 </body>
 </html>
