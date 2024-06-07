@@ -29,7 +29,7 @@ stages:
         source antenv/bin/activate
         python -m pip install --upgrade pip
         pip install pandas requests openpyxl
-        pip install setup
+        pip install .
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
