@@ -1,29 +1,14 @@
 # Python to Linux Web App on Azure
 # Build your Python project and deploy it to Azure as a Linux Web App.
-# Change python version to one thats appropriate for your application.
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
 - main
 
 variables:
-  # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: '44a4927d-eccc-4df7-a606-85bc1c507022'
-
-  # Web app name
   webAppName: 'yash-omptoolbox'
-
-  # Agent VM image name
   vmImageName: 'ubuntu-latest'
-
-  # Environment name
   environmentName: 'yash-omptoolbox'
-
-  # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
-
-  # Python version: 3.7
-  pythonVersion: '3.7'
 
 stages:
 - stage: Build
@@ -35,13 +20,15 @@ stages:
     steps:
     - task: UsePythonVersion@0
       inputs:
-        versionSpec: '$(pythonVersion)'
-      displayName: 'Use Python $(pythonVersion)'
-
+        versionSpec: '3.x'
+        addToPath: true
+      displayName: 'Use Python 3.x'
+    
     - script: |
         python -m venv antenv
         source antenv/bin/activate
         python -m pip install --upgrade pip
+        pip install pandas requests openpyxl
         pip install setup
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
@@ -56,9 +43,12 @@ stages:
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    - task: PublishBuildArtifacts@1
       displayName: 'Upload package'
-      artifact: drop
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifactName: 'drop'
+        publishLocation: 'Container'
 
 - stage: Deploy
   displayName: 'Deploy Web App'
@@ -73,15 +63,16 @@ stages:
       runOnce:
         deploy:
           steps:
-
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '$(pythonVersion)'
-            displayName: 'Use Python version'
+              versionSpec: '3.x'
+              addToPath: true
+            displayName: 'Use Python 3.x'
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : yash-omptoolbox'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
+              appType: 'webApp'  # or 'webAppContainer' if your app is a Docker container
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
