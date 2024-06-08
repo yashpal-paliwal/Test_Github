@@ -2,23 +2,8 @@
 <html>
 <head>
     <title>Create OMP Package</title>
-     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 4px;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-    </style>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
    
 </head>
 <body>
@@ -42,10 +27,12 @@
             <td> <input type="button" name="uploadConnectionFile" id="uploadFile" value="Upload Connection File"> </td>
         </tr>
         
-        <br><br><h2>OMP Details</h2>
+        <br><h2>OMP Details</h2>
         <tr>
-            <td> <label for="ompName">OMP Name:</label><br> </td>
-            <td> <input type="text" id="ompName" name="package_name"><br>  </td>
+            <td> <label for="ompName">OMP Name:</label></td>
+            <td> <input type="text" id="ompName" name="package_name"> </td>
+            <td> <label for="ompDescription"> OMP Description: </label> </td>
+            <td> <input type="text" id="ompDescription" name="package_desription"></td>
         </tr>
         <tr>
             <input type="submit" value="Create OMP Package">
@@ -54,64 +41,13 @@
         
     </form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-
-    </script>
-   <script>
-    $("#uploadFile").click(function(e){
-        e.preventDefault();
-        var fileInput = document.getElementById('fileToUpload');
-        var file = fileInput.files[0];
-        // Check file type and size
-        if(file.type != "application/json") {
-            alert("Please upload a .json file");
-            return;
-        }
-        if(file.size > 1048576) { // size in bytes
-            alert("File size should not exceed 1MB");
-            return;
-        }
-        
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var contents = e.target.result;
-            var jsonContents = JSON.parse(contents);
-            console.log(jsonContents);
-            $('#envUrl').val(jsonContents.base_url);
-            $('#username').val(jsonContents.username);
-            $('#password').val(jsonContents.password);
-        };
-        reader.readAsText(file);
-    });
-
-    $("#createPackage").submit(function(e){
-        e.preventDefault();
-        var formData = new FormData();
-        formData.append('base_url', $('#envUrl').val());
-        formData.append('username', $('#username').val());
-        formData.append('password', $('#password').val());
-        formData.append('package_name', $('#ompName').val());
-        if ($('#fileToUpload')[0].files.length > 0) { // Check if file is selected
-            formData.append('file', $('#fileToUpload')[0].files[0]);
-        }
-        $.ajax({
-            url: '/',
-            type: 'post',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response){
-                alert(JSON.stringify(response));
-                console.log('success from index.html for success');
-            },
-            error: function(error){
-                alert('Error: ' + JSON.stringify(error));
-                console.log('error from index.html page ajax');
-            }
-        });
-    });
-</script>
-
+    <!-- code for loader -->
+    <div id="loading-overlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scriptButtonClick.js') }}"></script>
+ 
 </body>
 </html>
