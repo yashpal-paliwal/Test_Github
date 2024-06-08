@@ -21,7 +21,7 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
+        
             $("#createPackage").click(function(e){
                 e.preventDefault();
                 var formData = new FormData();
@@ -44,7 +44,7 @@
                     }
                 });
             });
-        });
+       
     </script>
 </head>
 <body>
@@ -63,7 +63,11 @@
                 <td><input type="password" id="password" name="password"></td>
             </tr>
         </table>
-        <input type="file" name="file" id="fileToUpload">
+        <tr>
+            <td> <input type="file" name="file" id="fileToUpload"> </td>
+            <td> <input type="button" name="uploadConnectionFile" id="uploadFile" value="Upload Connection File"> </td>
+        </tr>
+        
         <br><br><h2>OMP Details</h2>
         <label for="ompName">OMP Name:</label><br>
         <input type="text" id="ompName" name="package_name"><br>
