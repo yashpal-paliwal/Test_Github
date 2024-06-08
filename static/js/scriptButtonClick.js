@@ -33,7 +33,7 @@ $("#fileToUpload").change(function(e){
         reader.readAsText(file);
 });
 
-$("#createPackage").submit(function(e){
+$("#ompForm").submit(function(e){
         e.preventDefault();
         var formData = new FormData();
         formData.append('base_url', $('#envUrl').val());
@@ -45,7 +45,7 @@ $("#createPackage").submit(function(e){
         }
         $.ajax({
             url: '/',
-            type: 'post',
+            type: 'post',   
             data: formData,
             contentType: false,
             processData: false,
@@ -66,3 +66,45 @@ $("#createPackage").submit(function(e){
             }
         });
 });
+
+
+$("#addToOmpButton").click(function(e){
+    e.preventDefault();
+    var formData = new FormData();
+    formData.append('base_url', $('#envUrl').val());
+    formData.append('username', $('#username').val());
+    formData.append('password', $('#password').val());
+    formData.append('package_name', $('#ompName').val());
+    if ($('#objectsFile')[0].files.length > 0) { // Check if file is selected
+        var file = $('#objectsFile')[0].files[0];
+        var fileType = file.name.split('.').pop().toLowerCase();
+        if (fileType !== 'xls' && fileType !== 'xlsx') {
+            alert('Invalid file type. Please select a .xlsx or .xls file.');
+            return;
+        }
+        formData.append('objects_file', file);
+    }
+    $.ajax({
+        url: '/add_to_omp',
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        
+        beforeSend: function() {
+            $('#loading-overlay').show();  // Show the overlay
+        },
+        complete: function() {
+            $('#loading-overlay').hide();  // Hide the overlay
+        },
+
+        success: function(response){
+            alert(JSON.stringify(response.message));
+            console.log(response.message);  
+        },
+        error: function(error){
+            alert('Error: ' + JSON.stringify(error));
+        }
+    });
+});
+

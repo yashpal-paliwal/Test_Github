@@ -18,7 +18,7 @@
 
     <main class="container my-4">
         
-        <form id="createPackage" method="post" enctype="multipart/form-data">
+        <form id="ompForm" method="post" enctype="multipart/form-data">
             <h4>Environment Details</h4>
             <div class="form-group">
                 <label for="envUrl">Environment URL</label>
@@ -48,7 +48,17 @@
                 <label for="ompDescription">OMP Description</label>
                 <input type="text" class="form-control" id="ompDescription" name="package_description">
             </div>
-            <button type="submit" class="btn btn-primary">Create OMP Package</button>
+
+            <h4>Objects Add to OMP</h4>
+            <div class="form-group">
+                <label for="objectsFile">Upload Excel File</label>
+                <input type="file" class="form-control-file" id="objectsFile" name="objects_file">
+            </div>
+            
+            <button type="submit" class="btn btn-primary ">Create OMP Package</button>
+            <button type="button" id="addToOmpButton" class="btn btn-primary">Add to OMP</button>
+
+            
         </form>
     </main>
 
