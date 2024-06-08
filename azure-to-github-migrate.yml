@@ -1,3 +1,7 @@
+variables:
+- group: GitHubToken-VarGroup
+
+
 trigger:
 - main
 
