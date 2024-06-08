@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<name>', methods=['GET', 'POST'])
 def hello(name=None):
-    if request.method == 'POST':
+    """ if request.method == 'POST':
         if 'file' in request.files:
             file = request.files['file']
             credentials = json.load(file)
@@ -20,8 +20,9 @@ def hello(name=None):
                 'package_name': request.form.get('package_name')
             }
         return create_empty_package(credentials)
-    else:
-        return render_template('index.html', name=name)
+    else: 
+        return """
+    render_template('index.html', name=name)
 
 def create_empty_package(credentials):
     # Get environment, package name, description and credentials from the json file
