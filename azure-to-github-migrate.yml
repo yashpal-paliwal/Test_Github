@@ -1,0 +1,16 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- checkout: self
+
+- script: |
+    git config user.name "yashpal-paliwal"
+    git config user.email "yashpal.paliwal@ap.jll.com"
+    git remote add github https://x-access-token:$(GitHubToken)@github.com/yashpal-paliwal/Test_Toolbox_OMP_APIs.git
+    git push github HEAD:main
+  displayName: 'Push to GitHub'
+
