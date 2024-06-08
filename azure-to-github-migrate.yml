@@ -15,6 +15,6 @@ steps:
     git config user.name "yashpal-paliwal"
     git config user.email "yashpal.paliwal@ap.jll.com"
     git remote add github https://x-access-token:$(GitHubToken)@github.com/yashpal-paliwal/Test_Toolbox_OMP_APIs.git
-    git push github HEAD:main
+    git push github HEAD:refs/heads/main
   displayName: 'Push to GitHub'
 
