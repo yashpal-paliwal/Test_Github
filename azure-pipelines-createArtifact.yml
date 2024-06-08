@@ -12,6 +12,12 @@ steps:
     source venv/bin/activate
     pip install -r requirements.txt
   displayName: 'Install dependencies'
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: $(System.DefaultWorkingDirectory)/CreateArtifactExceptGitIgnore.py
+  displayName: 'Artifact Creation Except gitIgnore'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
