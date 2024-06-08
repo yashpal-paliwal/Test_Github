@@ -21,7 +21,32 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        
+            $("#uploadFile").click(function(e){
+                e.preventDefault();
+                var fileInput = document.getElementById('fileToUpload');
+                var file = fileInput.files[0];
+                
+                // Check file type and size
+                if(file.type != "application/json") {
+                    alert("Please upload a .json file");
+                    return;
+                }
+                if(file.size > 1048576) { // size in bytes
+                    alert("File size should not exceed 1MB");
+                    return;
+                }
+                
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var contents = e.target.result;
+                    var jsonContents = JSON.parse(contents);
+                    $('#envUrl').val(jsonContents.environment);
+                    $('#username').val(jsonContents.username);
+                    $('#password').val(jsonContents.password);
+                };
+                reader.readAsText(file);
+            });
+
             $("#createPackage").click(function(e){
                 e.preventDefault();
                 var formData = new FormData();
