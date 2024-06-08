@@ -23,5 +23,6 @@ for line in lines:
             # Copy the file to the temporary directory
             shutil.copy(line, 'temp/' + line)
 
+
 # Now, you can use 'temp' as the rootFolderOrFile in the ArchiveFiles@2 task
 # This will only include the files and directories that are not listed in the .gitignore file
