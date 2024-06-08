@@ -1,29 +1,16 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
-from requests.auth import HTTPBasicAuth
-import requests
+from package_creator import create_empty_package  # Import the function
+import os
+import logging
 
 app = Flask(__name__)
 
-def create_empty_package(credentials):
-    environment = credentials['base_url']
-    package_name = credentials['package_name']
-    package_description = credentials.get('package_description', '')  # Use an empty string if package_description is not provided
-    username = credentials['username']
-    password = credentials['password']
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
-    url = f'{environment}/api/p/v1/om/createEmptyPackage?packageName={package_name}&packageDescription={package_description}'
-
-    response = requests.get(url, auth=HTTPBasicAuth(username, password))
-
-    if response.status_code == 200:
-        success_message = f'OMP successfully created at target:  {environment}'
-        return jsonify({'message': success_message}), 200
-    else:
-        return jsonify({'error': f'Request failed with status code {response.status_code}'}), 400
-
-@app.route('/', methods=['GET', 'POST'])
-def root():
-    if request.method == 'POST':
+@app.route('/', methods=['POST'])
+def create_package():
+    try:
         base_url = request.form.get('base_url')
         username = request.form.get('username')
         password = request.form.get('password')
@@ -40,12 +27,15 @@ def root():
         }
 
         return create_empty_package(credentials)
-    else:
-        return redirect(url_for('render_main_page', name='index.html'))
+    
+    except Exception as e:
+        logging.error("Error occurred while creating package: %s", e)
+        return jsonify({'error': 'An error occurred while creating the package.'}), 500
 
+@app.route('/', methods=['GET'])
 @app.route('/<name>', methods=['GET'])
 def render_main_page(name=None):
-    if name == 'index.html':
+    if name == 'index.html' or name is None:
         return render_template('index.html', name=name)
     else:
         return "Page not found", 404

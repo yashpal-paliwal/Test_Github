@@ -1,14 +1,22 @@
-$("#uploadFile").click(function(e){
-        e.preventDefault();
+$("#fileToUpload").change(function(e){
+        //e.preventDefault();
         var fileInput = document.getElementById('fileToUpload');
         var file = fileInput.files[0];
+
+        // Check if a file was selected
+        if (!file) {
+            return;  // Exit the function if no file was selected
+        }
+
         // Check file type and size
         if(file.type != "application/json") {
             alert("Please upload a .json file");
+            fileInput.value = "";  // Reset the file input field
             return;
         }
         if(file.size > 1048576) { // size in bytes
             alert("File size should not exceed 1MB");
+            fileInput.value = "";  // Reset the file input field
             return;
         }
         

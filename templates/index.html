@@ -1,53 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create OMP Package">
+    <meta name="keywords" content="OMP, Package, Create">
     <title>Create OMP Package</title>
-    <!-- Link to the CSS file -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-   
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <p>OMP Toolbox!!</p>
-    <form id="createPackage" method="post" enctype="multipart/form-data">
-        <h4>Environment Details</h4>
-        <table>
-            <tr>
-                <th>Environment URL</th>
-                <th>Username</th>
-                <th>Password</th>
-            </tr>
-            <tr>
-                <td><input type="text" id="envUrl" name="base_url"></td>
-                <td><input type="text" id="username" name="username"></td>
-                <td><input type="password" id="password" name="password"></td>
-            </tr>
-        </table>
-        <tr>
-            <td> <input type="file" name="file" id="fileToUpload"> </td>
-            <td> <input type="button" name="uploadConnectionFile" id="uploadFile" value="Upload Connection File"> </td>
-        </tr>
+    <!-- Header -->
+    <header class="bg-primary text-white text-center p-3">
+        <h1>OMP Toolbox</h1>
+    </header>
+
+    <main class="container my-4">
         
-        <br><h2>OMP Details</h2>
-        <tr>
-            <td> <label for="ompName">OMP Name:</label></td>
-            <td> <input type="text" id="ompName" name="package_name"> </td>
-            <td> <label for="ompDescription"> OMP Description: </label> </td>
-            <td> <input type="text" id="ompDescription" name="package_desription"></td>
-        </tr>
-        <tr>
-            <input type="submit" value="Create OMP Package">
-        </tr>
-        
-        
-    </form>
+        <form id="createPackage" method="post" enctype="multipart/form-data">
+            <h4>Environment Details</h4>
+            <div class="form-group">
+                <label for="envUrl">Environment URL</label>
+                <input type="text" class="form-control" id="envUrl" name="base_url">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            
+            <div class="form-group">
+                <label for="fileToUpload">Upload Connection File</label>
+                <input type="file" class="form-control-file" id="fileToUpload" name="file">
+                <!-- <button type="button" class="btn btn-secondary mt-2" id="uploadFile">Upload Connection File</button> -->
+            </div>
+
+            <h4>OMP Details</h4>
+            <div class="form-group">
+                <label for="ompName">OMP Name</label>
+                <input type="text" class="form-control" id="ompName" name="package_name">
+            </div>
+            <div class="form-group">
+                <label for="ompDescription">OMP Description</label>
+                <input type="text" class="form-control" id="ompDescription" name="package_description">
+            </div>
+            <button type="submit" class="btn btn-primary">Create OMP Package</button>
+        </form>
+    </main>
 
     <!-- code for loader -->
     <div id="loading-overlay" style="display: none;">
-        <div class="loader"></div>
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
+
+     <!-- Footer -->
+     <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 JLL. All rights reserved.
+            <br>
+            This code is developed and owned by JLL.
+            <br>
+            Unauthorized use or distribution is prohibited.
+        </div>
+    </footer>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/scriptButtonClick.js') }}"></script>
- 
 </body>
 </html>
