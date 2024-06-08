@@ -46,4 +46,5 @@ def create_empty_package(credentials):
         return jsonify({'error': f'Request failed with status code {response.status_code}'}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5001)
+   # app.run(host='0.0.0.0',port=5001)
+   app.run(debug=True,port=5001)
