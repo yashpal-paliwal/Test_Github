@@ -9,17 +9,19 @@ app = Flask(__name__)
 @app.route('/<name>', methods=['GET', 'POST'])
 def hello(name=None):
     if request.method == 'POST':
+        credentials = {
+            'base_url': request.form.get('environment'),
+            'username': request.form.get('username'),
+            'password': request.form.get('password'),
+            'package_name': request.form.get('package_name')
+        }
         if 'file' in request.files:
             file = request.files['file']
-            credentials = json.load(file)
-        elif request.form.get('environment') and request.form.get('username') and request.form.get('password'):
-            credentials = {
-                'base_url': request.form.get('environment'),
-                'username': request.form.get('username'),
-                'password': request.form.get('password'),
-                'package_name': request.form.get('package_name')
-            }
-        else:
+            file_credentials = json.load(file)
+            for key in file_credentials:
+                if file_credentials[key]:  # If the field in the file is not empty, use it
+                    credentials[key] = file_credentials[key]
+        if not all(credentials.values()):  # Check if any field is left blank
             return jsonify({'error': 'Environment, username, and password cannot be left blank'}), 400
         return create_empty_package(credentials)
     else: 
