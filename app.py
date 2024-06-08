@@ -8,21 +8,22 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<name>', methods=['GET', 'POST'])
 def hello(name=None):
-    """ if request.method == 'POST':
+    if request.method == 'POST':
         if 'file' in request.files:
             file = request.files['file']
             credentials = json.load(file)
-        else:
+        elif request.form.get('environment') and request.form.get('username') and request.form.get('password'):
             credentials = {
                 'base_url': request.form.get('environment'),
                 'username': request.form.get('username'),
                 'password': request.form.get('password'),
                 'package_name': request.form.get('package_name')
             }
+        else:
+            return jsonify({'error': 'Environment, username, and password cannot be left blank'}), 400
         return create_empty_package(credentials)
     else: 
-        return """
-    render_template('index.html', name=name)
+        return render_template('index.html', name=name)
 
 def create_empty_package(credentials):
     # Get environment, package name, description and credentials from the json file
@@ -47,5 +48,4 @@ def create_empty_package(credentials):
         return jsonify({'error': f'Request failed with status code {response.status_code}'}), 400
 
 if __name__ == '__main__':
-   # app.run(host='0.0.0.0',port=5001)
    app.run(debug=True,port=5001)
