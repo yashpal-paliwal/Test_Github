@@ -5,6 +5,7 @@ $("#fileToUpload").change(function(e){
 
         // Check if a file was selected
         if (!file) {
+           
             return;  // Exit the function if no file was selected
         }
 
@@ -108,3 +109,30 @@ $("#addToOmpButton").click(function(e){
     });
 });
 
+$("#clearFile").click(function(e){
+    e.preventDefault();
+    $('#objectsFile').val('');
+     // Enable the 'Create OMP' button when the file input is cleared
+     $('#createOMPbtn').prop('disabled', false);
+});
+
+$("#objectsFile").change(function(e){
+    var fileInput = document.getElementById('objectsFile');
+    var file = fileInput.files[0];
+
+    // Check if a file was selected
+    if (!file) {
+        // Enable the 'Create OMP' button if no file was selected
+        $('#createOMPbtn').prop('disabled', false);
+        return;
+    }
+    // Check file type
+    var fileType = file.name.split('.').pop().toLowerCase();
+    if (fileType !== 'xls' && fileType !== 'xlsx') {
+        alert('Invalid file type. Please select a .xlsx or .xls file.');
+        fileInput.value = "";  // Reset the file input field
+        return;
+    }
+     // Disable the 'Create OMP' button if an Excel file was selected
+     $('#createOMPbtn').prop('disabled', true);
+ });
