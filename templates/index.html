@@ -43,70 +43,75 @@
         </tr>
         
         <br><br><h2>OMP Details</h2>
-        <label for="ompName">OMP Name:</label><br>
-        <input type="text" id="ompName" name="package_name"><br>
-        <input type="submit" value="Create OMP Package">
+        <tr>
+            <td> <label for="ompName">OMP Name:</label><br> </td>
+            <td> <input type="text" id="ompName" name="package_name"><br>  </td>
+        </tr>
+        <tr>
+            <input type="submit" value="Create OMP Package">
+        </tr>
+        
+        
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 
     </script>
-    <script>
-        $("#uploadFile").click(function(e){
-            e.preventDefault();
-            var fileInput = document.getElementById('fileToUpload');
-            var file = fileInput.files[0];
-            console.log(file);
-            
-            // Check file type and size
-            if(file.type != "application/json") {
-                alert("Please upload a .json file");
-                return;
+   <script>
+    $("#uploadFile").click(function(e){
+        e.preventDefault();
+        var fileInput = document.getElementById('fileToUpload');
+        var file = fileInput.files[0];
+        // Check file type and size
+        if(file.type != "application/json") {
+            alert("Please upload a .json file");
+            return;
+        }
+        if(file.size > 1048576) { // size in bytes
+            alert("File size should not exceed 1MB");
+            return;
+        }
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var contents = e.target.result;
+            var jsonContents = JSON.parse(contents);
+            console.log(jsonContents);
+            $('#envUrl').val(jsonContents.base_url);
+            $('#username').val(jsonContents.username);
+            $('#password').val(jsonContents.password);
+        };
+        reader.readAsText(file);
+    });
+
+    $("#createPackage").submit(function(e){
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('base_url', $('#envUrl').val());
+        formData.append('username', $('#username').val());
+        formData.append('password', $('#password').val());
+        formData.append('package_name', $('#ompName').val());
+        if ($('#fileToUpload')[0].files.length > 0) { // Check if file is selected
+            formData.append('file', $('#fileToUpload')[0].files[0]);
+        }
+        $.ajax({
+            url: '/',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                alert(JSON.stringify(response));
+                console.log('success from index.html for success');
+            },
+            error: function(error){
+                alert('Error: ' + JSON.stringify(error));
+                console.log('error from index.html page ajax');
             }
-            if(file.size > 1048576) { // size in bytes
-                alert("File size should not exceed 1MB");
-                return;
-            }
-            
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var contents = e.target.result;
-                var jsonContents = JSON.parse(contents);
-                console.log(jsonContents);
-                $('#envUrl').val(jsonContents.base_url);
-                $('#username').val(jsonContents.username);
-                $('#password').val(jsonContents.password);
-            };
-            reader.readAsText(file);
         });
-    
-        $("#createPackage").click(function(e){
-            e.preventDefault();
-            var formData = new FormData();
-            formData.append('base_url', $('#envUrl').val());
-            formData.append('username', $('#username').val());
-            formData.append('password', $('#password').val());
-            formData.append('package_name', $('#ompName').val());
-            if ($('#fileToUpload')[0].files.length > 0) { // Check if file is selected
-                formData.append('file', $('#fileToUpload')[0].files[0]);
-            }
-            $.ajax({
-                url: '/',
-                type: 'post',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response){
-                    alert(JSON.stringify(response));
-                    console.log('success from index.html for success');
-                },
-                error: function(error){
-                    alert('Error: ' + JSON.stringify(error));
-                    console.log('error from index.html page ajax');
-                }
-            });
-        });
-    </script>
+    });
+</script>
+
     
 </body>
 </html>
