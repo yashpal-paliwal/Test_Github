@@ -5,17 +5,25 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/<name>')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/<name>', methods=['GET', 'POST'])
 def hello(name=None):
-    return render_template('index.html', name=name)
+    if request.method == 'POST':
+        if 'file' in request.files:
+            file = request.files['file']
+            credentials = json.load(file)
+        else:
+            credentials = {
+                'base_url': request.form.get('environment'),
+                'username': request.form.get('username'),
+                'password': request.form.get('password'),
+                'package_name': request.form.get('package_name')
+            }
+        return create_empty_package(credentials)
+    else:
+        return render_template('index.html', name=name)
 
-@app.route('/create_empty_package', methods=['GET'])
-def create_empty_package():
-    # Load credentials from json file
-    with open('credentials.json', 'r') as f:
-        credentials = json.load(f)
-
+def create_empty_package(credentials):
     # Get environment, package name, description and credentials from the json file
     environment = credentials['base_url']
     package_name = credentials['package_name']

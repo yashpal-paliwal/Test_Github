@@ -22,10 +22,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            $("#createPackage").click(function(){
+            $("#createPackage").click(function(e){
+                e.preventDefault();
+                var formData = new FormData();
+                formData.append('environment', $('#envUrl').val());
+                formData.append('username', $('#username').val());
+                formData.append('password', $('#password').val());
+                formData.append('package_name', $('#ompName').val());
+                formData.append('file', $('#fileToUpload')[0].files[0]);
                 $.ajax({
-                    url: '/create_empty_package',
-                    type: 'get',
+                    url: '/',
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response){
                         alert(JSON.stringify(response));
                     },
@@ -39,36 +49,25 @@
 </head>
 <body>
     <p>OMP Toolbox!!</p>
-    <button id="createPackage">Create OMP Package</button>
-    <br><br>
-
-     <h4>Environment Details</h4>
-    <table>
-        <tr>
-            <th>Environment URL</th>
-            <th>Username</th>
-            <th>Password</th>
-        </tr>
-        <tr>
-            <td><input type="text" id="envUrl" name="envUrl"></td>
-            <td><input type="text" id="username" name="username"></td>
-            <td> <input type="password" id="password" name="password"></td>
-        </tr>
-    </table>
-   
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Connection File" name="submit">
-    </form>
-    
-    <br><br><h2>OMP Details</h2>
-    <form>
+    <form id="createPackage" method="post" enctype="multipart/form-data">
+        <h4>Environment Details</h4>
+        <table>
+            <tr>
+                <th>Environment URL</th>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="envUrl" name="environment"></td>
+                <td><input type="text" id="username" name="username"></td>
+                <td><input type="password" id="password" name="password"></td>
+            </tr>
+        </table>
+        <input type="file" name="file" id="fileToUpload">
+        <br><br><h2>OMP Details</h2>
         <label for="ompName">OMP Name:</label><br>
-        <input type="text" id="ompName" name="ompName"><br>
-        <label for="ompDesc">OMP Description:</label><br>
-        <textarea id="ompDesc" name="ompDesc"></textarea><br>
-        <input type="submit" value="CreateOMP">
+        <input type="text" id="ompName" name="package_name"><br>
+        <input type="submit" value="Create OMP Package">
     </form>
-    
 </body>
 </html>
