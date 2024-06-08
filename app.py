@@ -23,6 +23,7 @@ def hello(name=None):
                     credentials[key] = file_credentials[key]
         if not all(credentials.values()):  # Check if any field is left blank
             return jsonify({'error': 'Environment, username, and password cannot be left blank'}), 400
+            print('error from app.py hello function')
         return create_empty_package(credentials)
     else: 
         return render_template('index.html', name=name)
@@ -48,6 +49,7 @@ def create_empty_package(credentials):
         return jsonify(data), 200
     else:
         return jsonify({'error': f'Request failed with status code {response.status_code}'}), 400
+        print('error from create_empty_package function')
 
 if __name__ == '__main__':
    app.run(debug=True,port=5001)

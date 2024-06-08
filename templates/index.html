@@ -32,7 +32,7 @@
                 <th>Password</th>
             </tr>
             <tr>
-                <td><input type="text" id="envUrl" name="environment"></td>
+                <td><input type="text" id="envUrl" name="base_url"></td>
                 <td><input type="text" id="username" name="username"></td>
                 <td><input type="password" id="password" name="password"></td>
             </tr>
@@ -73,7 +73,7 @@
                 var contents = e.target.result;
                 var jsonContents = JSON.parse(contents);
                 console.log(jsonContents);
-                $('#envUrl').val(jsonContents.environment);
+                $('#envUrl').val(jsonContents.base_url);
                 $('#username').val(jsonContents.username);
                 $('#password').val(jsonContents.password);
             };
@@ -83,7 +83,7 @@
         $("#createPackage").click(function(e){
             e.preventDefault();
             var formData = new FormData();
-            formData.append('environment', $('#envUrl').val());
+            formData.append('base_url', $('#envUrl').val());
             formData.append('username', $('#username').val());
             formData.append('password', $('#password').val());
             formData.append('package_name', $('#ompName').val());
@@ -98,9 +98,11 @@
                 processData: false,
                 success: function(response){
                     alert(JSON.stringify(response));
+                    console.log('success from index.html for success');
                 },
                 error: function(error){
                     alert('Error: ' + JSON.stringify(error));
+                    console.log('error from index.html page');
                 }
             });
         });
