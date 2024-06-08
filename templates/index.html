@@ -25,6 +25,7 @@
                 e.preventDefault();
                 var fileInput = document.getElementById('fileToUpload');
                 var file = fileInput.files[0];
+                console.log(file);
                 
                 // Check file type and size
                 if(file.type != "application/json") {
@@ -40,6 +41,7 @@
                 reader.onload = function(e) {
                     var contents = e.target.result;
                     var jsonContents = JSON.parse(contents);
+                    console.log(jsonContents);
                     $('#envUrl').val(jsonContents.environment);
                     $('#username').val(jsonContents.username);
                     $('#password').val(jsonContents.password);
