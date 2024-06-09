@@ -6,11 +6,14 @@ steps:
   inputs:
     versionSpec: '3.x'
     addToPath: true
-- script: |
-    python -m pip install --upgrade pip
-    pip install pandas requests openpyxl 
-  displayName: 'Install dependencies'
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: $(System.DefaultWorkingDirectory)/createOMP_Base.py
+# - script: |
+#     python -m pip install --upgrade pip
+#     pip install pandas requests openpyxl 
+#   displayName: 'Install dependencies'
+# - task: PythonScript@0
+#   inputs:
+#     scriptSource: 'filePath'
+#     scriptPath: $(System.DefaultWorkingDirectory)/createOMP_Base.py
+
+
+    
