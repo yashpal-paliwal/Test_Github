@@ -27,6 +27,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+      # Runs a single command using the runners shell
+      - name: Send greeting
+        run: echo "Hello ${{ inputs.name }}"
+
+      # HTML Preview step
+      - name: HTML Preview
+        id: html_preview
+        uses: pavi2410/html-preview-action@v2
+        with:
+          html_file: '/templates/index.html'
+
+      # Output the URL of the HTML preview
+      - name: Get HTML Preview URL
+        run: echo "HTML Preview URL: ${{ steps.html_preview.outputs.url }}"
