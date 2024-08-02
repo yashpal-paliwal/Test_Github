@@ -1,4 +1,4 @@
-name: Generate Artifact
+name: Generate Artifact Code
 
 on:
   push:
