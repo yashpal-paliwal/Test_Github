@@ -82,14 +82,14 @@ jobs:
           git reset --hard
           git clean -fdx
 
+      - name: List Files in Build Output Directory
+        run: ls -la build_output
+
       - name: Create Zip File
         run: |
           zip -r build_artifact.zip build_output/
       - name: List Files in Current Directory
         run: ls -la
-
-      - name: List Files in Build Output Directory
-        run: ls -la build_output
 
       - name: Move Zip File to Root
         run: mv build_artifact.zip build_artifact.zip
