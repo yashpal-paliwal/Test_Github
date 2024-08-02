@@ -1,4 +1,4 @@
-name: Demo 1 - Create Action
+name: Demo 1 - Build, Test and Deploy Action
 
 on:
   push:
