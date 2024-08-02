@@ -42,6 +42,15 @@ jobs:
         with:
           name: buildArtifact
 
+      - name: Verify Build Output Directory
+        run: |
+          if [ -d "build_output" ]; then
+            echo "build_output directory exists."
+          else
+            echo "build_output directory does not exist."
+            exit 1
+          fi
+
       - name: Test Step
         run: echo "Running tests..."
 
@@ -57,6 +66,15 @@ jobs:
         with:
           name: buildArtifact
 
+      - name: Verify Build Output Directory
+        run: |
+          if [ -d "build_output" ]; then
+            echo "build_output directory exists."
+          else
+            echo "build_output directory does not exist."
+            exit 1
+          fi
+
       - name: Deploy Step
         run: echo "Deploying the project..."
 
@@ -71,6 +89,15 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: buildArtifact
+
+      - name: Verify Build Output Directory
+        run: |
+          if [ -d "build_output" ]; then
+            echo "build_output directory exists."
+          else
+            echo "build_output directory does not exist."
+            exit 1
+          fi
 
       - name: Create Zip File
         run: |
