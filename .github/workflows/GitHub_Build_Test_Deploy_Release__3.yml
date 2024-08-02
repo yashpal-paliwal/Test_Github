@@ -1,4 +1,4 @@
-name: Demo 3 - Release Actions
+name: Demo 3 - Build, Test, Deploy and Release Actions
 
 on:
   push:
