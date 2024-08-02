@@ -5,6 +5,7 @@ on:
     workflows: ["Demo5"]
     types:
       - completed
+    result: success
 
 jobs:
   release:
