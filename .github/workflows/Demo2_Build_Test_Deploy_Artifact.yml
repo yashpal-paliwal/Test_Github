@@ -1,4 +1,4 @@
-name: Demo 2 - Artifact Demo Code
+name: Demo 2 - Build, Test, Deploy and Artifact Action
 
 on:
   push:
