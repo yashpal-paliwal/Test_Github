@@ -90,6 +90,9 @@ jobs:
         with:
           name: buildArtifact
 
+      - name: List Files in Current Directory
+        run: ls -la
+
       - name: Verify Build Output Directory
         run: |
           if [ -d "build_output" ]; then
