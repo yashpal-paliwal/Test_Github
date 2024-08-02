@@ -79,15 +79,16 @@ jobs:
         run: |
           zip -r build_artifact.zip build_output/
 
-      - name: Pull Latest Changes
+      - name: Create Empty Branch
         run: |
           git config --global user.name 'yashpal-paliwal'
           git config --global user.email 'yashpal.paliwal@jll.com'
-          git checkout -b Release_Branch
-          git pull origin Release_Branch --rebase
+          git checkout --orphan Release_Branch
+          git reset --hard
+          git clean -fdx
 
-      - name: Push to Release Branch
+      - name: Push Zip to Release Branch
         run: |
           git add build_artifact.zip
           git commit -m "Add build artifact zip"
-          git push origin Release_Branch
+          git push -f origin Release_Branch
