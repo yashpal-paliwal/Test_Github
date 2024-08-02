@@ -1,4 +1,4 @@
-name: Build and Release Workflow
+name: Build, Test and Release Workflow
 
 on:
   push:
@@ -24,8 +24,26 @@ jobs:
           name: buildArtifact
           path: build_output/
 
-  release:
+  test:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: buildArtifact
+          path: build_output/
+
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          # Add your test commands here
+
+  release:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
