@@ -12,6 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create Empty Branch
+        run: |
+          git config --global user.name 'yashpal-paliwal'
+          git config --global user.email 'yashpal.paliwal@jll.com'
+          git checkout --orphan Release_Branch
+          git reset --hard
+          git clean -fdx
+
       - name: Download Build Artifact
         uses: actions/download-artifact@v2
         with:
@@ -23,9 +31,6 @@ jobs:
 
       - name: Push Zip to Release Branch
         run: |
-          git config --global user.name 'yashpal-paliwal'
-          git config --global user.email 'yashpal.paliwal@jll.com'
-          git checkout -b Release_Branch
           git add build_artifact.zip
           git commit -m "Add build artifact zip"
           git push -f origin Release_Branch
