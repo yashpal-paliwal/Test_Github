@@ -91,12 +91,6 @@ jobs:
       - name: List Files in Current Directory
         run: ls -la
 
-      - name: Move Zip File to Root
-        run: mv build_artifact.zip build_artifact.zip
-
-      - name: List Files in Current Directory After Move
-        run: ls -la
-
       - name: Push Zip to Release Branch
         run: |
           git add build_artifact.zip
