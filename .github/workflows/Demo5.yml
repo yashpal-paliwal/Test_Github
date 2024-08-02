@@ -1,0 +1,25 @@
+name: Demo 5 - Build Artifact Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Build Artifact Directory
+        run: mkdir -p build_output
+
+      - name: Create Build Artifact
+        run: echo "This is a build artifact" > build_output/build_artifact.txt
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: buildArtifact
+          path: build_output/
