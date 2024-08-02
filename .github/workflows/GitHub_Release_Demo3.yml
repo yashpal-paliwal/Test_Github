@@ -84,7 +84,7 @@ jobs:
           git config --global user.name 'yashpal-paliwal'
           git config --global user.email 'yashpal.paliwal@jll.com'
           git checkout -b Release_Branch
-          git pull origin Release_Branch
+          git pull --ff-only origin Release_Branch
 
       - name: Push to Release Branch
         run: |
