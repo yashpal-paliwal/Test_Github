@@ -16,10 +16,7 @@ jobs:
         run: echo "Building the project..."
 
       - name: Create Build Artifact Directory
-        run: |
-          if [ ! -d "build_output" ]; then
-            mkdir build_output
-          fi
+        run: mkdir -p build_output
       - name: Create Build Artifact
         run: echo "This is a build artifact" > build_output/build_artifact.txt
 
@@ -82,14 +79,8 @@ jobs:
           name: buildArtifact
           path: build_output/
 
-      - name: List Files in Build Output Directory
-        run: ls -la build_output
-
       - name: Create Zip File
-        run: |
-          zip -r build_artifact.zip build_output/
-      - name: List Files in Current Directory
-        run: ls -la
+        run: zip -r build_artifact.zip build_output/
 
       - name: Push Zip to Release Branch
         run: |
