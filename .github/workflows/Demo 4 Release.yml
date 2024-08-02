@@ -2,7 +2,7 @@ name: Demo 4 - Release Actions
 
 on:
   workflow_run:
-    workflows: ["Build Artifact Workflow"]
+    workflows: ["Demo5"]
     types:
       - completed
 
