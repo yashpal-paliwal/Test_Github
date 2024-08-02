@@ -1,4 +1,4 @@
-name: Artifact Demo Code
+name: Demo2 - Artifact Demo Code
 
 on:
   push:
@@ -60,27 +60,5 @@ jobs:
       - name: Deploy Step
         run: echo "Deploying the project..."
 
-  release:
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: buildArtifact
-
-      - name: Create Zip File
-        run: |
-          zip -r build_artifact.zip build_output/
-
-      - name: Push to Release Branch
-        run: |
-          git config --global user.name 'yashpal-paliwal'
-          git config --global user.email 'yashpal.paliwal@jll.com'
-          git checkout -b Release_Branch
-          git add build_artifact.zip
-          git commit -m "Add build artifact zip"
-          git push origin Release_Branch
+      - name: Run Python Script
+        run: python3 helloworld.py
