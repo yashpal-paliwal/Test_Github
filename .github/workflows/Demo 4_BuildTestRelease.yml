@@ -1,4 +1,4 @@
-name: Build, Test and Release Workflow
+name: Demo 4_2 - Build, Test and Release Workflow
 
 on:
   push:
