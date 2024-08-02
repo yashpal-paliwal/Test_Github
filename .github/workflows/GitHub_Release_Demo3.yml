@@ -41,6 +41,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: buildArtifact
+          path: build_output/
 
       - name: List Files in Current Directory
         run: ls -la
@@ -68,6 +69,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: buildArtifact
+          path: build_output/
 
       - name: List Files in Current Directory
         run: ls -la
@@ -95,6 +97,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: buildArtifact
+          path: build_output/
 
       - name: List Files in Current Directory
         run: ls -la
