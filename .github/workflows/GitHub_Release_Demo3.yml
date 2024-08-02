@@ -115,11 +115,15 @@ jobs:
         run: |
           zip -r build_artifact.zip build_output/
 
-      - name: Push to Release Branch
+      - name: Pull Latest Changes
         run: |
           git config --global user.name 'yashpal-paliwal'
           git config --global user.email 'yashpal.paliwal@jll.com'
           git checkout -b Release_Branch
+          git pull origin Release_Branch
+
+      - name: Push to Release Branch
+        run: |
           git add build_artifact.zip
           git commit -m "Add build artifact zip"
           git push origin Release_Branch
