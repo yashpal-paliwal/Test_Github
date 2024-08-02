@@ -1,0 +1,53 @@
+name: GitHub 2 Demo - Build Artifact
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Step
+        run: echo "Building the project..."
+
+      - name: Create Build Artifact
+        run: echo "This is a build artifact" > build_artifact.txt
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: buildArtifact
+          path: build_artifact.txt
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: buildArtifact
+
+      - name: Test Step
+        run: echo "Running tests..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy Step
+        run: echo "Deploying the project..."
+
+      - name: Run Python Script
+        run: python3 helloworld.py
