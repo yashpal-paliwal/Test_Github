@@ -1,14 +1,31 @@
-name: Demo 4 - Release Actions
+name: Build and Release Workflow
 
 on:
-  workflow_run:
-    workflows: ["Demo5"]
-    types:
-      - completed
-    result: success
+  push:
+    branches:
+      - master
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Build Artifact Directory
+        run: mkdir -p build_output
+
+      - name: Create Build Artifact
+        run: echo "This is a build artifact" > build_output/build_artifact.txt
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: buildArtifact
+          path: build_output/
+
   release:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
