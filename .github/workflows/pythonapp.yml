@@ -1,4 +1,4 @@
-name: pyathon app - Python CI
+name: Test Python App - Python CI
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
 
     - name: Run Tests
       run: |
-        pytest test_demo_github_app.py
+        pytest test_main.py
 
   deploy:
     needs: build
@@ -41,4 +41,4 @@ jobs:
 
     - name: Start Application
       run: |
-        python demo-github-app.py
+        python main.py
