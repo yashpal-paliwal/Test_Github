@@ -1,4 +1,4 @@
-name: GitHub 2 Demo - Build Artifact
+name: Artifact Demo Code
 
 on:
   push:
@@ -15,14 +15,20 @@ jobs:
       - name: Build Step
         run: echo "Building the project..."
 
+      - name: Create Build Artifact Directory
+        run: |
+          if [ ! -d "build_output" ]; then
+            mkdir build_output
+          fi
+
       - name: Create Build Artifact
-        run: echo "This is a build artifact" > build_artifact.txt
+        run: echo "This is a build artifact" > build_output/build_artifact.txt
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
         with:
           name: buildArtifact
-          path: build_artifact.txt
+          path: build_output/
 
   test:
     runs-on: ubuntu-latest
@@ -46,7 +52,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: buildArtifact
 
       - name: Deploy Step
         run: echo "Deploying the project..."
