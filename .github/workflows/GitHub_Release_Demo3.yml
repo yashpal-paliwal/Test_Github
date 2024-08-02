@@ -79,6 +79,12 @@ jobs:
         run: |
           zip -r build_artifact.zip build_output/
 
+      - name: List Files in Current Directory
+        run: ls -la
+
+      - name: List Files in Build Output Directory
+        run: ls -la build_output
+
       - name: Create Empty Branch
         run: |
           git config --global user.name 'yashpal-paliwal'
@@ -86,6 +92,12 @@ jobs:
           git checkout --orphan Release_Branch
           git reset --hard
           git clean -fdx
+
+      - name: Move Zip File to Root
+        run: mv build_artifact.zip build_artifact.zip
+
+      - name: List Files in Current Directory After Move
+        run: ls -la
 
       - name: Push Zip to Release Branch
         run: |
